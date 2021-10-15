@@ -213,9 +213,6 @@ export const useGlobalStore = () => {
         async function asyncCreateNewList() {
             const response = await api.createTop5List(
                 { "name": "Untitled" + store.newListCounter, "items": ["?", "?", "?", "?", "?"] });
-            if (!response.data.success) {
-                console.log(response.data.error);
-            }
             if (response.data.success) {
                 let top5List = response.data.top5List;
                 storeReducer({
@@ -260,11 +257,16 @@ export const useGlobalStore = () => {
 
     store.deleteMarkedList = function() {
         async function asyncDeleteMarkedList() {
-            const response = await api.deleteTop5ListById(store.listMarkedForDeletion._id);
-            if (response.data.success) {
-                storeReducer({
-                    type: GlobalStoreActionType.DELETE_MARKED_LIST
-                })
+            try {
+                const response = await api.deleteTop5ListById(store.listMarkedForDeletion._id);
+                if (response.data.success) {
+                    storeReducer({
+                        type: GlobalStoreActionType.DELETE_MARKED_LIST
+                    })
+                }
+            }
+            catch(e) {
+                console.log("Why did this happen: " + e);
             }
             async function asyncHideDeleteListModal() {
                 let modal = document.getElementById("delete-modal");
@@ -303,7 +305,6 @@ export const useGlobalStore = () => {
                 let top5List = response.data.top5List;
 
                 response = await api.updateTop5ListById(top5List._id, top5List);
-                console.log(response.data.error);
                 if (response.data.success) {
                     storeReducer({
                         type: GlobalStoreActionType.SET_CURRENT_LIST,
