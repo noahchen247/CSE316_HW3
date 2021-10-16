@@ -200,6 +200,9 @@ export const useGlobalStore = () => {
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
             payload: {}
         });
+        tps.clearAllTransactions();
+        document.getElementById("close-button").className = "top5-button-disabled";
+        store.updateToolbarButtons();
     }
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
@@ -324,6 +327,7 @@ export const useGlobalStore = () => {
                     store.history.push("/top5list/" + top5List._id);
                 }
             }
+            document.getElementById("close-button").className = "top5-button";
         }
         asyncSetCurrentList(id);
     }
@@ -393,6 +397,21 @@ export const useGlobalStore = () => {
             type: GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE,
             payload: null
         })
+    }
+
+    store.updateToolbarButtons = async function() {
+        if (!tps.hasTransactionToUndo()) {
+            document.getElementById("undo-button").className = "top5-button-disabled";
+        }
+        else {
+            document.getElementById("undo-button").className = "top5-button";
+        }
+        if (!tps.hasTransactionToRedo()) {
+            document.getElementById("redo-button").className = "top5-button-disabled";
+        }
+        else {
+            document.getElementById("redo-button").className = "top5-button";
+        }
     }
 
     // THIS GIVES OUR STORE AND ITS REDUCER TO ANY COMPONENT THAT NEEDS IT

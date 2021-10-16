@@ -14,9 +14,11 @@ function EditToolbar() {
     let enabledButtonClass = "top5-button";
     function handleUndo() {
         store.undo();
+        store.updateToolbarButtons();
     }
     function handleRedo() {
         store.redo();
+        store.updateToolbarButtons();
     }
     function handleClose() {
         history.push("/");

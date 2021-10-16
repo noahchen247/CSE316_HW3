@@ -41,6 +41,7 @@ function Top5Item(props) {
 
         // UPDATE THE LIST
         store.addMoveItemTransaction(sourceId, targetId);
+        store.updateToolbarButtons();
     }
 
     function handleToggleEdit(event) {
@@ -62,6 +63,7 @@ function Top5Item(props) {
             let id = event.target.id.substring("item-".length);
             //console.log("id: " + id + ". newText: " + text);
             store.addChangeItemTransaction(id - 1, text);
+            store.updateToolbarButtons();
             toggleEdit();
         }
     }
@@ -73,6 +75,7 @@ function Top5Item(props) {
     function blur(event) {
         let id = event.target.id.substring("item-".length);
         store.addChangeItemTransaction(id - 1, text);
+        store.updateToolbarButtons();
         toggleEdit();
     }
 
