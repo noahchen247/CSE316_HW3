@@ -83,7 +83,6 @@ function Top5Item(props) {
     }
     let itemStatus = false;
     if (store.isItemEditActive) {
-        console.log("a");
         itemStatus = true;
     }
     let itemElement = 
