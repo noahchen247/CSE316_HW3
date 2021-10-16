@@ -29,6 +29,7 @@ const ListSelector = () => {
 
     function handleAdd() {
         store.createTop5List();
+        store.updateToolbarButtons();
     }
 
     return (

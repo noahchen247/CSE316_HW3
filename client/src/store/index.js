@@ -235,6 +235,7 @@ export const useGlobalStore = () => {
                 });
                 store.history.push("/top5list/" + top5List._id);
             }
+            document.getElementById("close-button").className = "top5-button";
         }
         asyncCreateNewList();
     }

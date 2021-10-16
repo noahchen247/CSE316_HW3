@@ -11,7 +11,7 @@ function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
     const history = useHistory();
 
-    let enabledButtonClass = "top5-button";
+    let enabledButtonClass = "top5-button-disabled";
     function handleUndo() {
         store.undo();
         store.updateToolbarButtons();
