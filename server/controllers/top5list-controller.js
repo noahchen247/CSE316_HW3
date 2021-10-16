@@ -78,6 +78,7 @@ console.log("updateTop5List: " + JSON.stringify(body));
     })
 }
 deleteTop5List = async (req, res) => {
+    /*
     await Top5List.findOneAndDelete({ _id: req.params.id }, (err, top5List) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -91,6 +92,18 @@ deleteTop5List = async (req, res) => {
 
         return res.status(200).json({ success: true, data: top5List })
     }).catch(err => console.log(err))
+    */
+    await Top5List.findOneAndDelete({_id:req.params.id}).then((response) => {
+        if (response.err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (response === null) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Top 5 List not found` })
+        }
+        return res.status(200).json({success:true, data:response.top5List});
+    })
 }
 getTop5ListById = async (req, res) => {
     await Top5List.findOne({ _id: req.params.id }, (err, list) => {
