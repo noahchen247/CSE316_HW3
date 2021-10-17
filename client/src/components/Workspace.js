@@ -12,6 +12,11 @@ function Workspace() {
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
 
+    let listURL = window.location.href.substring("http://localhost:3000/top5list/".length);
+    if (store.currentList === null && listURL !== "") {
+        store.setCurrentList(listURL);
+    }
+
     let editItems = "";
     if (store.currentList) {
         editItems = 

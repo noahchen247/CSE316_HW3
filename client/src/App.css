@@ -213,6 +213,10 @@ body {
   height:20%;
 }
 
+.top5-item:focus, .top5-item-dragged-to:focus {
+  outline:none !important;
+}
+
 .item-number {
   justify-content: center;
   width:100%;

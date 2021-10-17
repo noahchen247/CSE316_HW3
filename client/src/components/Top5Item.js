@@ -52,16 +52,13 @@ function Top5Item(props) {
 
     function toggleEdit() {
         let newActive = !editActive;
-        if (newActive) {
-            store.setIsItemEditActive();
-        }
+        store.setIsItemEditActive();
         setEditActive(newActive);
     }
 
     function handleKeyPress(event) {
         if (event.code === "Enter") {
             let id = event.target.id.substring("item-".length);
-            //console.log("id: " + id + ". newText: " + text);
             store.addChangeItemTransaction(id - 1, text);
             store.updateToolbarButtons();
             toggleEdit();
@@ -114,7 +111,7 @@ function Top5Item(props) {
             <input
                 id={'item-' + (index + 1)}
                 className={itemClass}
-                type="text"
+                type='text'
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
                 defaultValue={props.text}

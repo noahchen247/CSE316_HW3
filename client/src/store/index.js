@@ -38,8 +38,8 @@ export const useGlobalStore = () => {
         idNamePairs: [],
         currentList: null,
         newListCounter: 0,
-        listNameActive: false,
-        itemActive: false,
+        isListNameEditActive: false,
+        isItemEditActive: false,
         listMarkedForDeletion: null
     });
 
@@ -98,7 +98,7 @@ export const useGlobalStore = () => {
                     idNamePairs: store.idNamePairs,
                     currentList: payload,
                     newListCounter: store.newListCounter,
-                    isListNameEditActive: true,
+                    isListNameEditActive: !store.isListNameEditActive,
                     isItemEditActive: false,
                     listMarkedForDeletion: null
                 });
@@ -109,7 +109,7 @@ export const useGlobalStore = () => {
                     currentList: store.currentList,
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
-                    isItemEditActive: true,
+                    isItemEditActive: !store.isItemEditActive,
                     listMarkedForDeletion: null
                 });
             }
@@ -126,7 +126,7 @@ export const useGlobalStore = () => {
             case GlobalStoreActionType.SHOW_DELETE_LIST_MODAL: {
                 return setStore({
                     idNamePairs: store.idNamePairs,
-                    currentList: payload.currentList,
+                    currentList: null,
                     newListCounter: store.newListCounter,
                     isListNameEditActive: true,
                     isItemEditActive: false,
@@ -250,7 +250,6 @@ export const useGlobalStore = () => {
                 storeReducer({
                     type: GlobalStoreActionType.SHOW_DELETE_LIST_MODAL,
                     payload: {
-                        currentList: top5List,
                         listMarkedForDeletion: top5List
                     }
                 })
@@ -333,6 +332,9 @@ export const useGlobalStore = () => {
         asyncSetCurrentList(id);
     }
     store.addMoveItemTransaction = function (start, end) {
+        if (start === end) {
+            return;
+        }
         let transaction = new MoveItem_Transaction(store, start, end);
         tps.addTransaction(transaction);
     }
@@ -359,6 +361,9 @@ export const useGlobalStore = () => {
     }
     store.addChangeItemTransaction = function (id, newText) {
         let oldText = store.currentList.items[id];
+        if (oldText === newText) {
+            return;
+        }
         let transaction = new ChangeItem_Transaction(store, id, oldText, newText);
         tps.addTransaction(transaction);
     }
