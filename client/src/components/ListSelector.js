@@ -27,6 +27,11 @@ const ListSelector = () => {
         ))
     }
 
+    let addClass = "top5-button";
+    if (store.isListNameEditActive) {
+        addClass = "top5-button-disabled";
+    }
+
     function handleAdd() {
         store.createTop5List();
         store.updateToolbarButtons();
@@ -38,7 +43,7 @@ const ListSelector = () => {
                 <input
                     type="button"
                     id="add-list-button"
-                    className="top5-button"
+                    className={addClass}
                     value="+"
                     onClick={handleAdd} />
                 Your Lists
